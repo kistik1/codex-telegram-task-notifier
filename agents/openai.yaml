@@ -1,0 +1,4 @@
+interface:
+  display_name: "Telegram Task Notifier"
+  short_description: "Install and repair global Codex Telegram alerts"
+  default_prompt: "Use $telegram-task-notifier to install, repair, verify, or publish global Telegram notifications for Codex task completion."
