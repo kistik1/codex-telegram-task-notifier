@@ -14,8 +14,6 @@ cd codex-telegram-task-notifier
 ./scripts/install.sh
 ~/.codex/hooks/setup-telegram-notify.sh
 ./scripts/verify.sh
-./scripts/send-test.sh
-./scripts/send-approval-test.sh
 ```
 
 Setup prompts for `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` and stores them only on the local machine in `~/.codex/hooks/telegram.env`.
@@ -35,9 +33,12 @@ Setup prompts for `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` and stores them on
 ./scripts/install.sh
 ./scripts/repair.sh
 ./scripts/verify.sh
-./scripts/send-test.sh
-./scripts/send-approval-test.sh
-./scripts/uninstall.sh
+```
+
+Manual send test (optional):
+
+```bash
+python3 ./scripts/manage.py send-test manual
 ```
 
 ## Migration to Another Machine
