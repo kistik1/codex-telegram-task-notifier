@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.DS_Store
+hooks/state/
+hooks/telegram.env
+*.sqlite

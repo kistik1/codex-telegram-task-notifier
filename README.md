@@ -1,37 +1,55 @@
 # Codex Telegram Task Notifier
 
-Reusable global Codex Telegram notifications for:
+Global Codex Telegram notifications for:
 - task completion
 - approval requests
 - user input requests
-- Telegram bot commands `/codex_status` and `/ping`
+- bot commands `/codex_status` and `/ping`
 
-## Install
+## Quick Start (Clone + Install)
 
 ```bash
-git clone <your-repo-url> codex-telegram-task-notifier
+git clone git@github.com:kistik1/codex-telegram-task-notifier.git
 cd codex-telegram-task-notifier
 ./scripts/install.sh
-~/.codex/hooks/setup-telegram-notify.sh <bot_token> <chat_id>
+~/.codex/hooks/setup-telegram-notify.sh
 ./scripts/verify.sh
 ./scripts/send-test.sh
+./scripts/send-approval-test.sh
 ```
 
-## Publish
+Setup prompts for `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` and stores them only on the local machine in `~/.codex/hooks/telegram.env`.
+
+## Runtime Layout
+
+- Skill bundle: `~/.codex/skills/telegram-task-notifier`
+- Notify hook: `~/.codex/hooks/telegram-notify.sh`
+- Bot bridge: `~/.codex/hooks/codex_telegram.py`
+- Local secrets: `~/.codex/hooks/telegram.env`
+- Bot state: `~/.codex/hooks/state/`
+- User service: `~/.config/systemd/user/codex-telegram-bot.service`
+
+## Common Commands
 
 ```bash
-git init
-git add .
-git commit -m "Add Codex Telegram task notifier skill"
-git remote add origin <your-github-repo-url>
-git push -u origin main
-git tag v1.0.0
-git push origin v1.0.0
+./scripts/install.sh
+./scripts/repair.sh
+./scripts/verify.sh
+./scripts/send-test.sh
+./scripts/send-approval-test.sh
+./scripts/uninstall.sh
 ```
 
-## Notes
+## Migration to Another Machine
 
-- The installer copies the skill to `~/.codex/skills/telegram-task-notifier`
-- The runtime hooks live under `~/.codex/hooks`
-- The systemd user unit lives at `~/.config/systemd/user/codex-telegram-bot.service`
-- The installer preserves existing `telegram.env` credentials
+```bash
+git clone git@github.com:kistik1/codex-telegram-task-notifier.git
+cd codex-telegram-task-notifier
+./scripts/install.sh
+~/.codex/hooks/setup-telegram-notify.sh
+./scripts/verify.sh
+```
+
+Notes:
+- Do not copy `telegram.env` via git.
+- The installer is path-aware and supports `CODEX_HOME` override.

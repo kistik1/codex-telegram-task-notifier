@@ -184,6 +184,25 @@ def send_test(codex_home: Path, label: str) -> int:
     return result.returncode
 
 
+def send_hook_test(codex_home: Path, event_type: str, label: str) -> int:
+    if event_type not in {"agent-turn-complete", "approval-requested", "user-input-requested"}:
+        print(f"Unsupported event type: {event_type}", file=sys.stderr)
+        return 1
+    hook = paths(codex_home)["hooks_dir"] / "telegram-notify.sh"
+    payload = {
+        "type": event_type,
+        "thread_id": f"{event_type}-test",
+        "turn_id": f"{event_type}-{label}",
+        "cwd": str(REPO_ROOT),
+        "message": f"{event_type} test from packaged skill: {label}",
+    }
+    result = subprocess.run(
+        ["bash", str(hook), json.dumps(payload)],
+        text=True,
+    )
+    return result.returncode
+
+
 def uninstall(codex_home: Path) -> None:
     p = paths(codex_home)
     remove_notify_config(p["config"], p["hooks_dir"] / "telegram-notify.sh")
@@ -214,10 +233,17 @@ def main() -> int:
     if command == "send-test":
         label = sys.argv[2] if len(sys.argv) > 2 else "manual"
         return send_test(codex_home, label)
+    if command == "send-hook-test":
+        event_type = sys.argv[2] if len(sys.argv) > 2 else ""
+        label = sys.argv[3] if len(sys.argv) > 3 else "manual"
+        return send_hook_test(codex_home, event_type, label)
     if command == "uninstall":
         uninstall(codex_home)
         return 0
-    print("Usage: manage.py [install|repair|verify|send-test|uninstall] [label]", file=sys.stderr)
+    print(
+        "Usage: manage.py [install|repair|verify|send-test|send-hook-test|uninstall] [args]",
+        file=sys.stderr,
+    )
     return 1
 
 

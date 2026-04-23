@@ -42,9 +42,11 @@ Primary commands from the skill repo:
 - `scripts/repair.sh`
 - `scripts/verify.sh`
 - `scripts/send-test.sh`
+- `scripts/send-approval-test.sh`
 - `scripts/uninstall.sh`
 
 If the user explicitly wants a manual live test, run `scripts/send-test.sh`.
+If the user wants to verify approval alerts specifically, run `scripts/send-approval-test.sh`.
 
 ## Troubleshooting
 

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NotifierOrchestratorInput",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "command": {
+      "type": "string",
+      "enum": ["install", "repair", "verify", "uninstall"]
+    },
+    "codex_home": {
+      "type": "string",
+      "description": "Optional CODEX_HOME override."
+    }
+  },
+  "required": ["command"]
+}
